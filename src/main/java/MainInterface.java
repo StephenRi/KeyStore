@@ -90,7 +90,7 @@ public class MainInterface {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
 
-                //未登录用户不能修改文件
+                //未登录的用户不能修改文件
                 if (userName.length() == 0) {
                     return;
                 } else {
