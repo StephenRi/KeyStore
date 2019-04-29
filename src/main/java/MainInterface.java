@@ -150,6 +150,13 @@ public class MainInterface {
         //全局数据
         allWebJson = new JSONObject();
         allCardJson = new JSONObject();
+
+        File tmpFile = getMetaDataFile();
+        if (tmpFile.exists()) {
+            loginMenuItem.doClick();
+        } else {
+            logupMenuItem.doClick();
+        }
     }
 
     public void reStart() throws Exception {
