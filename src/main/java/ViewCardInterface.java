@@ -1,6 +1,7 @@
 import com.alibaba.fastjson.JSONObject;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import constant.FileConstant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,22 +43,22 @@ public class ViewCardInterface {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        titleTextField.setText(cardJson.getString("title"));
-        noTextField.setText(cardJson.getString("no"));
-        bankTextField.setText(cardJson.getString("bank"));
-        payPassTextField.setText(cardJson.getString("payPass"));
-        webURLTextField.setText(cardJson.getString("webURL"));
-        webUserNameTextField.setText(cardJson.getString("webUserName"));
-        webPasswordTextField.setText(cardJson.getString("webPassword"));
-        remarkTextArea.setText(cardJson.getString("remark"));
+        titleTextField.setText(cardJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE));
+        noTextField.setText(cardJson.getString(FileConstant.JSON_CARD_KEY_NAME_NO));
+        bankTextField.setText(cardJson.getString(FileConstant.JSON_CARD_KEY_NAME_BANK));
+        payPassTextField.setText(cardJson.getString(FileConstant.JSON_CARD_KEY_NAME_PAY_PASS));
+        webURLTextField.setText(cardJson.getString(FileConstant.JSON_CARD_KEY_NAME_WEB_URL));
+        webUserNameTextField.setText(cardJson.getString(FileConstant.JSON_CARD_KEY_NAME_WEB_USER_NAME));
+        webPasswordTextField.setText(cardJson.getString(FileConstant.JSON_CARD_KEY_NAME_WEB_PASSWORD));
+        remarkTextArea.setText(cardJson.getString(FileConstant.JSON_CARD_KEY_NAME_REMARK));
     }
 
     public class ViewCardInterfaceActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("Delete")) {
                 JSONObject allCardJson = ViewCardInterface.this.mainInterface.getAllCardJson();
-                if (allCardJson.containsKey(cardJson.getString("title"))) {
-                    allCardJson.remove(cardJson.getString("title"));
+                if (allCardJson.containsKey(cardJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE))) {
+                    allCardJson.remove(cardJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE));
                 }
                 ViewCardInterface.this.frame.dispose();
                 ViewCardInterface.this.mainInterface.getViewCardMenuItem().doClick();
@@ -73,15 +74,15 @@ public class ViewCardInterface {
                 String remark = ViewCardInterface.this.remarkTextArea.getText();
 
                 JSONObject allCardJson = ViewCardInterface.this.mainInterface.getAllCardJson();
-                if (allCardJson.containsKey(cardJson.getString("title"))) {
-                    JSONObject editCardJson = allCardJson.getJSONObject(cardJson.getString("title"));
-                    editCardJson.put("no", no);
-                    editCardJson.put("bank", bank);
-                    editCardJson.put("payPass", payPass);
-                    editCardJson.put("webURL", webURL);
-                    editCardJson.put("webUserName", webUserName);
-                    editCardJson.put("webPassword", webPassword);
-                    editCardJson.put("remark", remark);
+                if (allCardJson.containsKey(cardJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE))) {
+                    JSONObject editCardJson = allCardJson.getJSONObject(cardJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE));
+                    editCardJson.put(FileConstant.JSON_CARD_KEY_NAME_NO, no);
+                    editCardJson.put(FileConstant.JSON_CARD_KEY_NAME_BANK, bank);
+                    editCardJson.put(FileConstant.JSON_CARD_KEY_NAME_PAY_PASS, payPass);
+                    editCardJson.put(FileConstant.JSON_CARD_KEY_NAME_WEB_URL, webURL);
+                    editCardJson.put(FileConstant.JSON_CARD_KEY_NAME_WEB_USER_NAME, webUserName);
+                    editCardJson.put(FileConstant.JSON_CARD_KEY_NAME_WEB_PASSWORD, webPassword);
+                    editCardJson.put(FileConstant.JSON_CARD_KEY_NAME_REMARK, remark);
                 }
                 ViewCardInterface.this.frame.dispose();
                 ViewCardInterface.this.mainInterface.getViewCardMenuItem().doClick();

@@ -1,6 +1,7 @@
 import com.alibaba.fastjson.JSONObject;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import constant.FileConstant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,12 +50,12 @@ public class NewWebInterface {
                     return;
                 }
                 JSONObject webJson = new JSONObject();
-                webJson.put("title", title);
-                webJson.put("userName", userName);
-                webJson.put("mailBox", mailBox);
-                webJson.put("password", password);
-                webJson.put("remark", remark);
-                webJson.put("kind", "Web");
+                webJson.put(FileConstant.JSON_ALL_KEY_NAME_TITLE, title);
+                webJson.put(FileConstant.JSON_WEB_KEY_NAME_USER_NAME, userName);
+                webJson.put(FileConstant.JSON_WEB_KEY_NAME_MAIL_BOX, mailBox);
+                webJson.put(FileConstant.JSON_WEB_KEY_NAME_PASSWORD, password);
+                webJson.put(FileConstant.JSON_WEB_KEY_NAME_REMARK, remark);
+                webJson.put(FileConstant.JSON_ALL_KEY_NAME_KIND, FileConstant.JSON_WEB_VALUE_KIND);
 
                 JSONObject allWebJson = NewWebInterface.this.mainInterface.getAllWebJson();
                 if (allWebJson.containsKey(title)) {

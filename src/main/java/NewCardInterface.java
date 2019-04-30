@@ -1,6 +1,7 @@
 import com.alibaba.fastjson.JSONObject;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import constant.FileConstant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,15 +61,15 @@ public class NewCardInterface {
                 }
 
                 JSONObject cardJson = new JSONObject();
-                cardJson.put("title", title);
-                cardJson.put("no", no);
-                cardJson.put("bank", bank);
-                cardJson.put("payPass", payPass);
-                cardJson.put("webURL", webURL);
-                cardJson.put("webUserName", webUserName);
-                cardJson.put("webPassword", webPassword);
-                cardJson.put("remark", remark);
-                cardJson.put("kind", "Card");
+                cardJson.put(FileConstant.JSON_ALL_KEY_NAME_TITLE, title);
+                cardJson.put(FileConstant.JSON_CARD_KEY_NAME_NO, no);
+                cardJson.put(FileConstant.JSON_CARD_KEY_NAME_BANK, bank);
+                cardJson.put(FileConstant.JSON_CARD_KEY_NAME_PAY_PASS, payPass);
+                cardJson.put(FileConstant.JSON_CARD_KEY_NAME_WEB_URL, webURL);
+                cardJson.put(FileConstant.JSON_CARD_KEY_NAME_WEB_USER_NAME, webUserName);
+                cardJson.put(FileConstant.JSON_CARD_KEY_NAME_WEB_PASSWORD, webPassword);
+                cardJson.put(FileConstant.JSON_CARD_KEY_NAME_REMARK, remark);
+                cardJson.put(FileConstant.JSON_ALL_KEY_NAME_KIND, FileConstant.JSON_CARD_VALUE_KIND);
 
                 JSONObject allCardJson = NewCardInterface.this.mainInterface.getAllCardJson();
                 if (allCardJson.containsKey(title)) {

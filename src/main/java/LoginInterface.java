@@ -1,6 +1,7 @@
 import com.alibaba.fastjson.JSONObject;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import constant.FileConstant;
 import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
@@ -71,7 +72,7 @@ public class LoginInterface {
                 String password = new String(passwordPasswordField.getPassword());
 
                 String currentDir = System.getProperty("user.dir");
-                String userDirName = currentDir + File.separator + "user" + File.separator + userName;
+                String userDirName = currentDir + File.separator + FileConstant.FILE_NAME_USER + File.separator + userName;
                 File userDir = new File(userDirName);
                 if (!userDir.exists()) {
                     JOptionPane.showMessageDialog(null, userName + " not logged up", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -79,7 +80,7 @@ public class LoginInterface {
                     return;
                 }
 
-                String userFileName = userDirName + File.separator + "userData";
+                String userFileName = userDirName + File.separator + FileConstant.FILE_NAME_USERDATA;
                 File userFile = new File(userFileName);
                 String userJsonStr = "";
                 JSONObject userJson = new JSONObject();
@@ -112,17 +113,17 @@ public class LoginInterface {
                     }
 
                     //读取用户数据文件到allWebJson等
-                    File webFile = LoginInterface.this.mainInterface.getFile("web");
-                    File cardFile = LoginInterface.this.mainInterface.getFile("card");
+                    File webFile = LoginInterface.this.mainInterface.getFile(FileConstant.FILE_NAME_WEB);
+                    File cardFile = LoginInterface.this.mainInterface.getFile(FileConstant.FILE_NAME_CARD);
                     try {
                         if (webFile.exists()) {
-                            JSONObject allWebJson = LoginInterface.this.mainInterface.getJsonFromFile("web");
+                            JSONObject allWebJson = LoginInterface.this.mainInterface.getJsonFromFile(FileConstant.FILE_NAME_WEB);
                             LoginInterface.this.mainInterface.setAllWebJson(allWebJson);
                         } else {
                             webFile.createNewFile();
                         }
                         if (cardFile.exists()) {
-                            JSONObject allCardJson = LoginInterface.this.mainInterface.getJsonFromFile("card");
+                            JSONObject allCardJson = LoginInterface.this.mainInterface.getJsonFromFile(FileConstant.FILE_NAME_CARD);
                             LoginInterface.this.mainInterface.setAllCardJson(allCardJson);
                         } else {
                             cardFile.createNewFile();

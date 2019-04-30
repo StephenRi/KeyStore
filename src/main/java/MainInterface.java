@@ -1,6 +1,8 @@
 import com.alibaba.fastjson.JSONObject;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import constant.FileConstant;
+import constant.InterfaceConstant;
 import org.apache.commons.io.FileUtils;
 import utils.AESUtil;
 
@@ -64,12 +66,12 @@ public class MainInterface {
                 JList list = (JList) e.getSource();
                 if (e.getClickCount() == 2) {
                     JSONObject json = (JSONObject) list.getSelectedValue();
-                    if (json.getString("kind").equals("Web")) {
+                    if (json.getString(FileConstant.JSON_ALL_KEY_NAME_KIND).equals(FileConstant.JSON_WEB_VALUE_KIND)) {
                         viewWebInterface = new ViewWebInterface(MainInterface.this, json);
                         viewWebInterface.init();
                         return;
                     }
-                    if (json.getString("kind").equals("Card")) {
+                    if (json.getString(FileConstant.JSON_ALL_KEY_NAME_KIND).equals(FileConstant.JSON_CARD_VALUE_KIND)) {
                         viewCardInterface = new ViewCardInterface(MainInterface.this, json);
                         viewCardInterface.init();
                         return;
@@ -108,21 +110,21 @@ public class MainInterface {
         menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
 
-        logMenu = new JMenu("Log");
-        newMenu = new JMenu("New");
-        viewMenu = new JMenu("View");
+        logMenu = new JMenu(InterfaceConstant.MENU_NAME_LOG);
+        newMenu = new JMenu(InterfaceConstant.MENU_NAME_NEW);
+        viewMenu = new JMenu(InterfaceConstant.MENU_NAME_VIEW);
 
         menuBar.add(logMenu);
         menuBar.add(newMenu);
         menuBar.add(viewMenu);
 
-        loginMenuItem = new JMenuItem("Log In");
-        logupMenuItem = new JMenuItem("Log Up");
-        newWebMenuItem = new JMenuItem("New Web");
-        newCardMenuItem = new JMenuItem("New Card");
-        viewAllMenuItem = new JMenuItem("View All");
-        viewWebMenuItem = new JMenuItem("View Web");
-        viewCardMenuItem = new JMenuItem("View Card");
+        loginMenuItem = new JMenuItem(InterfaceConstant.MENUITEM_NAME_LOG_IN);
+        logupMenuItem = new JMenuItem(InterfaceConstant.MENUITEM_NAME_LOG_UP);
+        newWebMenuItem = new JMenuItem(InterfaceConstant.MENUITEM_NAME_NEW_WEB);
+        newCardMenuItem = new JMenuItem(InterfaceConstant.MENUITEM_NAME_NEW_CARD);
+        viewAllMenuItem = new JMenuItem(InterfaceConstant.MENUITEM_NAME_VIEW_ALL);
+        viewWebMenuItem = new JMenuItem(InterfaceConstant.MENUITEM_NAME_VIEW_WEB);
+        viewCardMenuItem = new JMenuItem(InterfaceConstant.MENUITEM_NAME_VIEW_CARD);
 
         logMenu.add(loginMenuItem);
         logMenu.add(logupMenuItem);
@@ -169,8 +171,8 @@ public class MainInterface {
     }
 
     public void saveJsonToFile() throws Exception {
-        File webFile = getFile("web");
-        File cardFile = getFile("card");
+        File webFile = getFile(FileConstant.FILE_NAME_WEB);
+        File cardFile = getFile(FileConstant.FILE_NAME_CARD);
         writeJsonToFile(webFile, allWebJson);
         writeJsonToFile(cardFile, allCardJson);
     }
@@ -232,7 +234,7 @@ public class MainInterface {
     }
 
     public File getMetaDataFile() {
-        String metaDataFileName = getJarDir() + File.separator + "user" + File.separator + "metadata";
+        String metaDataFileName = getJarDir() + File.separator + FileConstant.FILE_NAME_USER + File.separator + FileConstant.FILE_NAME_METADATA;
         File metaDataFile = new File(metaDataFileName);
         return metaDataFile;
     }
@@ -259,7 +261,7 @@ public class MainInterface {
 
     public String getUserDirName() {
         String currentDir = getJarDir();
-        String userDirName = currentDir + File.separator + "user" + File.separator + getUserName();
+        String userDirName = currentDir + File.separator + FileConstant.FILE_NAME_USER + File.separator + getUserName();
         return userDirName;
     }
 
@@ -310,7 +312,7 @@ public class MainInterface {
     public class MyListCellRenderer extends JLabel implements ListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             JSONObject jsonObject = (JSONObject) value;
-            String kind = (jsonObject).getString("kind");
+            String kind = (jsonObject).getString(FileConstant.JSON_ALL_KEY_NAME_KIND);
 
             String beginHtml = "<html>";
             String endHtml = "</html>";
@@ -325,38 +327,38 @@ public class MainInterface {
 
             //title
             if (isSelected) {
-                content = beginHtml + selectedMasterFont + jsonObject.getString("title") + endFont + wrapHtml;
+                content = beginHtml + selectedMasterFont + jsonObject.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE) + endFont + wrapHtml;
             } else {
-                content = beginHtml + masterFont + jsonObject.getString("title") + endFont + wrapHtml;
+                content = beginHtml + masterFont + jsonObject.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE) + endFont + wrapHtml;
             }
 
             //如果是web，显示UserName和MailBox
-            if (kind.equals("Web")) {
+            if (kind.equals(FileConstant.JSON_WEB_VALUE_KIND)) {
                 if (isSelected) {
-                    if (jsonObject.containsKey("userName")) {
-                        content += selectedSlaveFont + indentHtml + jsonObject.getString("userName") + endFont;
+                    if (jsonObject.containsKey(FileConstant.JSON_WEB_KEY_NAME_USER_NAME)) {
+                        content += selectedSlaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_WEB_KEY_NAME_USER_NAME) + endFont;
                     }
-                    if (jsonObject.containsKey("mailBox")) {
-                        content += selectedSlaveFont + indentHtml + jsonObject.getString("mailBox") + endFont;
+                    if (jsonObject.containsKey(FileConstant.JSON_WEB_KEY_NAME_MAIL_BOX)) {
+                        content += selectedSlaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_WEB_KEY_NAME_MAIL_BOX) + endFont;
                     }
                 } else {
-                    if (jsonObject.containsKey("userName")) {
-                        content += slaveFont + indentHtml + jsonObject.getString("userName") + endFont;
+                    if (jsonObject.containsKey(FileConstant.JSON_WEB_KEY_NAME_USER_NAME)) {
+                        content += slaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_WEB_KEY_NAME_USER_NAME) + endFont;
                     }
-                    if (jsonObject.containsKey("mailBox")) {
-                        content += slaveFont + indentHtml + jsonObject.getString("mailBox") + endFont;
+                    if (jsonObject.containsKey(FileConstant.JSON_WEB_KEY_NAME_MAIL_BOX)) {
+                        content += slaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_WEB_KEY_NAME_MAIL_BOX) + endFont;
                     }
                 }
             }
 
             //如果是card，显示No.和Bank
-            if (kind.equals("Card")) {
+            if (kind.equals(FileConstant.JSON_CARD_VALUE_KIND)) {
                 if (isSelected) {
-                    content += selectedSlaveFont + indentHtml + jsonObject.getString("no") + endFont;
-                    content += selectedSlaveFont + indentHtml + jsonObject.getString("bank") + endFont;
+                    content += selectedSlaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_CARD_KEY_NAME_NO) + endFont;
+                    content += selectedSlaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_CARD_KEY_NAME_BANK) + endFont;
                 } else {
-                    content += slaveFont + indentHtml + jsonObject.getString("no") + endFont;
-                    content += slaveFont + indentHtml + jsonObject.getString("bank") + endFont;
+                    content += slaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_CARD_KEY_NAME_NO) + endFont;
+                    content += slaveFont + indentHtml + jsonObject.getString(FileConstant.JSON_CARD_KEY_NAME_BANK) + endFont;
                 }
             }
 
@@ -368,12 +370,12 @@ public class MainInterface {
 
     public class MainInterfaceActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals("Log In")) {
+            if (e.getActionCommand().equals(InterfaceConstant.MENUITEM_NAME_LOG_IN)) {
                 loginInterface = new LoginInterface(MainInterface.this);
                 loginInterface.init();
                 return;
             }
-            if (e.getActionCommand().equals("Log Up")) {
+            if (e.getActionCommand().equals(InterfaceConstant.MENUITEM_NAME_LOG_UP)) {
                 logupInterface = new LogupInterface(MainInterface.this);
                 logupInterface.init();
                 return;
@@ -384,17 +386,17 @@ public class MainInterface {
                 JOptionPane.showMessageDialog(null, "You need to log in to continue", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            if (e.getActionCommand().equals("New Web")) {
+            if (e.getActionCommand().equals(InterfaceConstant.MENUITEM_NAME_NEW_WEB)) {
                 MainInterface.this.newWebInterface = new NewWebInterface(MainInterface.this);
                 MainInterface.this.newWebInterface.init();
                 return;
             }
-            if (e.getActionCommand().equals("New Card")) {
+            if (e.getActionCommand().equals(InterfaceConstant.MENUITEM_NAME_NEW_CARD)) {
                 MainInterface.this.newCardInterface = new NewCardInterface(MainInterface.this);
                 MainInterface.this.newCardInterface.init();
                 return;
             }
-            if (e.getActionCommand().equals("View All")) {
+            if (e.getActionCommand().equals(InterfaceConstant.MENUITEM_NAME_VIEW_ALL)) {
                 if (MainInterface.this.allWebJson.isEmpty() && MainInterface.this.allCardJson.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "no data exists", "Warning", JOptionPane.WARNING_MESSAGE);
                     return;
@@ -413,7 +415,7 @@ public class MainInterface {
                 }
                 return;
             }
-            if (e.getActionCommand().equals("View Web")) {
+            if (e.getActionCommand().equals(InterfaceConstant.MENUITEM_NAME_VIEW_WEB)) {
                 if (MainInterface.this.allWebJson.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "no web exists", "Warning", JOptionPane.WARNING_MESSAGE);
                     return;
@@ -428,7 +430,7 @@ public class MainInterface {
                 }
                 return;
             }
-            if (e.getActionCommand().equals("View Card")) {
+            if (e.getActionCommand().equals(InterfaceConstant.MENUITEM_NAME_VIEW_CARD)) {
                 if (MainInterface.this.allCardJson.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "no card exists", "Warning", JOptionPane.WARNING_MESSAGE);
                     return;
@@ -470,8 +472,8 @@ public class MainInterface {
 
     public class JsonComparator implements Comparator<JSONObject> {
         public int compare(JSONObject o1, JSONObject o2) {
-            String title1 = o1.getString("title");
-            String title2 = o2.getString("title");
+            String title1 = o1.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE);
+            String title2 = o2.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE);
             return title1.compareTo(title2);
         }
     }

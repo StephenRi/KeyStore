@@ -1,6 +1,7 @@
 import com.alibaba.fastjson.JSONObject;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import constant.FileConstant;
 import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
@@ -55,7 +56,7 @@ public class LogupInterface {
                 String confirmPass = confirmPassTextField.getText();
 
                 String currentDir = System.getProperty("user.dir");
-                String userDirName = currentDir + File.separator + "user" + File.separator + userName;
+                String userDirName = currentDir + File.separator + FileConstant.FILE_NAME_USER + File.separator + userName;
 
                 File userDir = new File(userDirName);
                 if (userDir.exists()) {
@@ -80,7 +81,7 @@ public class LogupInterface {
                         JOptionPane.showMessageDialog(null, "NoSuchAlgorithm: MD5", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     userJson.put("password", passwordHash);
-                    String userFileName = userDirName + File.separator + "userData";
+                    String userFileName = userDirName + File.separator + FileConstant.FILE_NAME_USERDATA;
                     File userFile = new File(userFileName);
                     try {
                         if (userFile.createNewFile()) {
@@ -89,8 +90,8 @@ public class LogupInterface {
                             LogupInterface.this.mainInterface.setPassword(password);
                             LogupInterface.this.mainInterface.setLastLogged(userName);
 
-                            File webFile = LogupInterface.this.mainInterface.getFile("web");
-                            File cardFile = LogupInterface.this.mainInterface.getFile("card");
+                            File webFile = LogupInterface.this.mainInterface.getFile(FileConstant.FILE_NAME_WEB);
+                            File cardFile = LogupInterface.this.mainInterface.getFile(FileConstant.FILE_NAME_CARD);
                             if (!webFile.createNewFile() || !cardFile.createNewFile()) {
                                 JOptionPane.showMessageDialog(null, "Create data file failed", "Error", JOptionPane.ERROR_MESSAGE);
                                 return;

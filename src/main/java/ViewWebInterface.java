@@ -1,6 +1,7 @@
 import com.alibaba.fastjson.JSONObject;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import constant.FileConstant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,19 +40,19 @@ public class ViewWebInterface {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        titleTextField.setText(webJson.getString("title"));
-        userNameTextField.setText(webJson.getString("userName"));
-        mailBoxTextField.setText(webJson.getString("mailBox"));
-        passwordTextField.setText(webJson.getString("password"));
-        remarkTextArea.setText(webJson.getString("remark"));
+        titleTextField.setText(webJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE));
+        userNameTextField.setText(webJson.getString(FileConstant.JSON_WEB_KEY_NAME_USER_NAME));
+        mailBoxTextField.setText(webJson.getString(FileConstant.JSON_WEB_KEY_NAME_MAIL_BOX));
+        passwordTextField.setText(webJson.getString(FileConstant.JSON_WEB_KEY_NAME_PASSWORD));
+        remarkTextArea.setText(webJson.getString(FileConstant.JSON_WEB_KEY_NAME_REMARK));
     }
 
     public class ViewWebInterfaceActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals("Delete")) {
                 JSONObject allWebJson = ViewWebInterface.this.mainInterface.getAllWebJson();
-                if (allWebJson.containsKey(webJson.getString("title"))) {
-                    allWebJson.remove(webJson.getString("title"));
+                if (allWebJson.containsKey(webJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE))) {
+                    allWebJson.remove(webJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE));
                 }
                 ViewWebInterface.this.frame.dispose();
                 ViewWebInterface.this.mainInterface.getViewWebMenuItem().doClick();
@@ -65,12 +66,12 @@ public class ViewWebInterface {
                 String remark = ViewWebInterface.this.remarkTextArea.getText();
 
                 JSONObject allWebJson = ViewWebInterface.this.mainInterface.getAllWebJson();
-                if (allWebJson.containsKey(webJson.getString("title"))) {
-                    JSONObject editWebJson = allWebJson.getJSONObject(webJson.getString("title"));
-                    editWebJson.put("userName", userName);
-                    editWebJson.put("mailBox", mailBox);
-                    editWebJson.put("password", password);
-                    editWebJson.put("remark", remark);
+                if (allWebJson.containsKey(webJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE))) {
+                    JSONObject editWebJson = allWebJson.getJSONObject(webJson.getString(FileConstant.JSON_ALL_KEY_NAME_TITLE));
+                    editWebJson.put(FileConstant.JSON_WEB_KEY_NAME_USER_NAME, userName);
+                    editWebJson.put(FileConstant.JSON_WEB_KEY_NAME_MAIL_BOX, mailBox);
+                    editWebJson.put(FileConstant.JSON_WEB_KEY_NAME_PASSWORD, password);
+                    editWebJson.put(FileConstant.JSON_WEB_KEY_NAME_REMARK, remark);
                 }
                 ViewWebInterface.this.frame.dispose();
                 ViewWebInterface.this.mainInterface.getViewWebMenuItem().doClick();
